@@ -13,8 +13,8 @@ module Fold
       @source.split(/\n/).reject{|line| line.blank?}
     end
     
-    def render fold= precompiler.new.fold(lines)
-      fold.children.map{|child| child.render}
+    def render context
+      precompiler.new.fold(lines).children.map{|child| child.render}
     end
     
 #    *** me hard

@@ -24,7 +24,7 @@ namespace :gem do
     file.write %{
 Gem::Specification.new do |s|
   s.name             = "fold"
-  s.version          = "0.0.2"
+  s.version          = "0.0.3"
   s.platform         = Gem::Platform::RUBY
   s.has_rdoc         = false
   s.summary          = "Toolkit for creating whitespace active mini-languages. Inspired by Haml. Feature light."
