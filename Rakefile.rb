@@ -48,14 +48,14 @@ namespace :gem do
     spec = %{
 Gem::Specification.new do |s|
   s.name             = "fold"
+  s.date             = "2008-07-21"
   s.version          = "#{@version}"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.has_rdoc         = false
   s.summary          = "Toolkit for creating whitespace active mini-languages. Inspired by Haml. Feature light."
-  s.author           = "Collin Miller"
+  s.authors          = ["Collin Miller"]
   s.email            = "collintmiller@gmail.com"
   s.homepage         = "http://github.com/collin/fold"
-  s.require_path     = "lib"
   s.files            = %w{#{(%w(README Rakefile.rb) + Dir.glob("{lib,rspec}/**/*")).join(' ')}}
   
   s.add_dependency  "rake"
