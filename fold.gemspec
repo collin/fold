@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.name             = "fold"
   s.date             = "2008-07-21"
-  s.version          = "0.0.5"
+  s.version          = "0.0.6"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.has_rdoc         = false
   s.summary          = "Toolkit for creating whitespace active mini-languages. Inspired by Haml. Feature light."
