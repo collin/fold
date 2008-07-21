@@ -1,29 +1,22 @@
 require 'rspec/fold_spec_helper'
 
 describe Fold::Engine do
+  before(:each) do
+    @fixture = Pathname.new(FoldFixtureRoot)
+    @path= @fixture +"fixture.target.fold"
+    @engine= Fold::Engine.new @path.read  
+
+#     @empty = @fixture + "empty.target.fold"
+#     @empty_engine = Fold::Engine.new @empty.read
+  end
+
   it "inherits Module" do
     Fold::Engine.class.should == Class
   end
 
   describe "#initialize" do
-    before(:each) do
-      @path= "#{FoldFixtureRoot}/fixture.target.fold"
-      @engine= Fold::Engine.new File.read(@path)  
-    end
-  
     it "sets fold content" do
       @engine.instance_variable_get(:@source).should == File.read(@path)
-    end
-  end
-  
-  describe "#prepare_fold" do
-    before(:each) do
-      @path= "#{FoldFixtureRoot}/fixture.target.fold"
-      @engine= Fold::Engine.new File.read(@path)  
-    end
-    
-    it "prepares fold content" do
-      @engine.instance_variable_get(:@prepared_source).should_not be_nil
     end
   end
   

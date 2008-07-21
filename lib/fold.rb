@@ -1,3 +1,6 @@
+__DIR__ = File.dirname(__FILE__)
+$LOAD_PATH << __DIR__ unless $LOAD_PATH.include?(__DIR__)
+
 require 'facets'
 
 module Fold

@@ -5,6 +5,8 @@ module Fold
     def fold lines
       last_line= produce
 
+      return last_line if lines.empty?
+
       parent_line= nil
       
       parent_stack= []
@@ -34,6 +36,7 @@ module Fold
      
         last_line= line
       end
+      
       parent_stack.first
     end
     

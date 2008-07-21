@@ -2,11 +2,6 @@ module Fold
   class Engine
     def initialize source
       @source= source
-      prepare_source
-    end
-    
-    def prepare_source
-      @prepared_source= true
     end
     
     def lines
@@ -14,11 +9,14 @@ module Fold
     end
     
     def render context
-      precompiler.new.fold(lines).children.map{|child| child.render}
+      precompiler = precompiler_class.new
+      precompiler.fold(lines).children.map do |child| 
+        child.render(precompiler)
+      end
     end
     
 #    *** me hard
-    def precompiler
+    def precompiler_class
       @precompiler||= instance_eval "#{self.class.to_s.split(/::/).first}::Precompiler"
     end
   end

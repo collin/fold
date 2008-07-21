@@ -1,7 +1,11 @@
-__DIR__ = path = File.dirname(__FILE__)
-
 require 'rubygems'
+require 'pathname'
 require 'spec'
+
+__DIR__ = Pathname.new(__FILE__).dirname
+
+
+task :default => 'spec:all'
 
 namespace :spec do
   task :prepare do
@@ -18,13 +22,32 @@ namespace :spec do
   end
 end
 
+task :cleanup do 
+  Dir.glob("**/*.*~")+Dir.glob("**/*~").each{|swap|FileUtils.rm(swap, :force => true)}
+end
+
 namespace :gem do
-  task :spec do
-    file = File.new("#{__DIR__}/fold.gemspec", 'w+')
-    file.write %{
+  task :version do
+    @version = "0.0.5"
+  end
+
+  task :build => :spec do
+    load __DIR__ + "fold.gemspec"
+    Gem::Builder.new(@fold_gemspec).build
+  end
+
+  task :install => :build do
+    cmd = "gem install fold -l"
+    system cmd unless system "sudo #{cmd}"
+    FileUtils.rm(__DIR__ + "fold-#{@version}.gem")
+  end
+
+  task :spec => :version do
+    file = File.new(__DIR__ + "fold.gemspec", 'w+')
+    spec = %{
 Gem::Specification.new do |s|
   s.name             = "fold"
-  s.version          = "0.0.3"
+  s.version          = "#{@version}"
   s.platform         = Gem::Platform::RUBY
   s.has_rdoc         = false
   s.summary          = "Toolkit for creating whitespace active mini-languages. Inspired by Haml. Feature light."
@@ -39,5 +62,8 @@ Gem::Specification.new do |s|
   s.add_dependency  "rspec"
 end
 }
+
+  @fold_gemspec = eval(spec)
+  file.write(spec)
   end
 end

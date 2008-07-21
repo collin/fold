@@ -14,12 +14,24 @@ module Fold
         :text => line, 
         :tabs => tabs
       }
-    
-      if klass= detect_class(line)
+
+# This all happens because I need to access Precompiler attributes
+# from within AbstractFold render methods
+# Pretty much needs a nice refactor, but don't have the time.
+# PS: thx ruby   
+      fold = if klass= detect_class(line)
         klass.new attrs
       else
         AbstractFold.new attrs.merge(:tabs => -1)
       end
+      
+      instance_variables.each do |var|
+        fold.instance_variable_set var, instance_variable_get(var)
+  
+        fold.metaclass.send :attr_accessor, var.gsub('@', '')
+      end
+
+      fold
     end
     
     def detect_class line

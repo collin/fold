@@ -55,6 +55,10 @@ LINE 1
       @it.fold(en.lines)
     }.should raise_error(Confused::IndentationError)
   end
+
+  it "doesn't choke with empty source" do
+    @it.fold([]).should_not be_nil
+  end
 end
 
 describe Fold::Precompiler, ".step_in?" do

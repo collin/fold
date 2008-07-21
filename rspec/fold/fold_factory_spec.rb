@@ -1,6 +1,11 @@
 require 'rspec/fold_spec_helper'
 
-class Included; include Fold::FoldFactory end
+class Included
+  include Fold::FoldFactory 
+  def initialize
+    @instance_variable = []
+  end
+end
 
 describe Fold::FoldFactory do
   it "inherits module" do
@@ -36,6 +41,14 @@ describe Fold::FoldFactory, ".produce" do
   it "folds other folds" do
     Included.folds :Location, /^\@/
     @it.produce('@LINE').is_a?(Included::Location).should == true  
+  end
+
+  it "passes along instance variables" do
+    @it.produce.instance_variables.should include("@instance_variable")
+  end
+
+  it "and sets up attribute accessors for them" do
+    @it.produce.instance_variable.should === []
   end
 end
 
