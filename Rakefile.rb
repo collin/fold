@@ -44,6 +44,7 @@ namespace :gem do
 
   task :spec => :version do
     file = File.new(__DIR__ + "fold.gemspec", 'w+')
+    FileUtils.chmod 0755, __DIR__ + "fold.gemspec"
     spec = %{
 Gem::Specification.new do |s|
   s.name             = "fold"
