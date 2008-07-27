@@ -30,6 +30,11 @@ module Fold
   
         fold.metaclass.send :attr_accessor, var.gsub('@', '')
       end
+      that = self
+      fold.meta_def :method_missing do |meth, *args|
+        return that.send(meth, *args) if that.respond_to?(meth)
+        super
+      end
 
       fold
     end

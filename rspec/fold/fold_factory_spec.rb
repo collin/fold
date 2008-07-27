@@ -5,6 +5,10 @@ class Included
   def initialize
     @instance_variable = []
   end
+
+  def passed
+    :passed
+  end
 end
 
 describe Fold::FoldFactory do
@@ -45,6 +49,10 @@ describe Fold::FoldFactory, ".produce" do
 
   it "passes along instance variables" do
     @it.produce.instance_variables.should include("@instance_variable")
+  end
+
+  it "methods fall through" do
+    @it.produce.passed.should == :passed
   end
 
   it "and sets up attribute accessors for them" do
