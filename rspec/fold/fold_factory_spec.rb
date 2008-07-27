@@ -60,8 +60,6 @@ describe Fold::FoldFactory, ".produce" do
   end
 end
 
-
-
 #describe Fold::Precompiler::Action::Regex do
 #  it "matches !LINE" do
 #    Fold::Precompiler::Action::Regex.should match("!LINE")
