@@ -6,6 +6,8 @@ require 'facets'
 module Fold
   require 'fold/engine'
   require 'fold/abstract_fold'
+  require 'fold/abstract_slice'
   require 'fold/fold_factory'
+  require 'fold/slice_factory'
   require 'fold/precompiler'
 end

@@ -35,7 +35,7 @@ module Fold
     end
     
     module ClassMethods
-      def slices, id, regex=AbstractSlice::Regex, &block
+      def slices id, regex=AbstractSlice::Regex, &block
         fold= Class.new(AbstractSlice)
         fold.const_set :Regex, regex
         

@@ -4,7 +4,7 @@ class Included
   include Fold::FoldFactory
   include Fold::SliceFactory
 
-  slices :Interpolation /#\{(.*?)\}/ do
+  slices :Interpolation, /#\{(.*?)\}/ do
     
   end
 
