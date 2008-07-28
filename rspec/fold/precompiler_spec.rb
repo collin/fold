@@ -9,6 +9,10 @@ end
 class Confused < Fold::Precompiler
   folds :Line, //
   folds :What, /what/
+
+  slices :Octothorp, /#([\w]+))/ do
+    "octothorpedo:#{text}"
+  end
 end  
 
 describe Fold::Precompiler, ".folds" do

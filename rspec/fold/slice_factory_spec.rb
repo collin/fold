@@ -5,7 +5,7 @@ class Included
   include Fold::SliceFactory
 
   slices :Interpolation, /#\{(.*?)\}/ do
-    
+    text
   end
 
   def initialize
@@ -26,7 +26,15 @@ describe Fold::SliceFactory do
     @it = Included.new
   end
 
+  it "has list of included slices" do
+    Included.defined_slices.should include(Included::Interpolation)
+  end
+
+  it "generates constant" do
+    Included::Interpolation.should_not be_nil
+  end
+
   it "replaces items in a string" do
-    @it.process_line "#{hey} whats #{up}"
+    @it.process('#{hey} whats #{up}').should == "hey whats up"
   end
 end

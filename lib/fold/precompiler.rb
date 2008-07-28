@@ -1,6 +1,7 @@
 module Fold
   class Precompiler
     include Fold::FoldFactory
+    include Fold::SliceFactory
   
     def fold lines
       last_line= produce
@@ -12,7 +13,7 @@ module Fold
       parent_stack= []
 
       lines.each do |text|
-        line = produce text
+        line = produce process(text)
 
         indent = line.tabs - last_line.tabs
 
