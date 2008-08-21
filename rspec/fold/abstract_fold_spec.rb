@@ -12,6 +12,11 @@ describe Fold::AbstractFold, ".initialize" do
     Fold::Precompiler.folds :What, /what/
     Fold::Precompiler::What::Regex.should == /what/
   end
+
+  it "and specifies whether or not to rip the match from the source" do
+    Fold::Precompiler.folds :Whatever, /whatever/, false
+    Fold::Precompiler::Whatever.clear_match.should == false
+  end
 end
 
 describe Fold::AbstractFold, ".render" do
@@ -27,6 +32,12 @@ describe Fold::AbstractFold, ".render" do
     
     what= Fold::Precompiler::What.new(:text=>'whatever')
     what.render.should== "ever?"
+  end
+
+  it "doesn't clear match text if clear_match is false" do
+    Fold::Precompiler.folds :Dirty, /dirty/, false
+    dirty = Fold::Precompiler::Dirty.new(:text=>"dirty bird")
+    dirty.render.should == "dirty bird"
   end
   
   it "renders children" do

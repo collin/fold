@@ -10,7 +10,7 @@ class Confused < Fold::Precompiler
   folds :Line, //
   folds :What, /what/
 
-  slices :Octothorp, /#([\w]+))/ do
+  slices :Octothorp, /#([\w]+)/ do
     "octothorpedo:#{text}"
   end
 end  
@@ -48,6 +48,22 @@ LINE 7
     LINE 9
     }
     @it.fold(en.lines).children.length.should == 3
+  end
+
+  it "children can be orphans" do
+    en = Fold::Engine.new "LINE 1"
+    @it.fold(en.lines).parent.should == nil
+  end
+
+  it "lets children know about their parents" do
+    en = Fold::Engine.new %{
+Line 1
+  Line 2
+  Line 3
+}
+  
+    folded = @it.fold(en.lines)
+    folded.children.first.parent.should == folded
   end
   
   it "barfs on innappropriate indentation" do

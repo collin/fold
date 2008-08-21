@@ -51,11 +51,12 @@ module Fold
     end
     
     module ClassMethods
-      def folds id, regex=AbstractFold::Regex, &block
+      def folds id, regex=AbstractFold::Regex, clear_match=true, &block
         fold= Class.new(AbstractFold)
         fold.const_set :Regex, regex
         
         fold.send :define_method, :render, &block if block_given?
+        fold.class.send :define_method, :clear_match do; clear_match end
         
         const_set id, fold
         defined_folds << fold

@@ -9,8 +9,8 @@ module Fold
         :children => [],
         :tabs => -1
       }.merge(source)
-      
-      attrs[:text].gsub! self.class::Regex, ''
+
+      attrs[:text].gsub! self.class::Regex, '' if self.class.clear_match
       
       super attrs
     end

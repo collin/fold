@@ -34,7 +34,9 @@ module Fold
           parent_line = parent_stack.last
           parent_line.children << line
         end
-     
+
+        line.parent = parent_line unless parent_line.nil?
+
         last_line= line
       end
       
