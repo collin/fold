@@ -1,13 +1,18 @@
-__DIR__ = File.dirname(__FILE__)
-$LOAD_PATH << __DIR__ unless $LOAD_PATH.include?(__DIR__)
-
-require 'facets'
+require 'pathname'
+require 'activesupport'
+require 'parse_tree'
+require 'parse_tree_extensions'
+require 'ruby2ruby'
+require 'metaid'
 
 module Fold
-  require 'fold/engine'
-  require 'fold/abstract_fold'
-  require 'fold/abstract_slice'
-  require 'fold/fold_factory'
-  require 'fold/slice_factory'
-  require 'fold/precompiler'
+  def self.root
+    @root ||= Pathname.new(__FILE__).dirname.expand_path
+  end
+  require root+'fold/engine'
+  require root+'fold/abstract_fold'
+  require root+'fold/abstract_slice'
+  require root+'fold/fold_factory'
+  require root+'fold/slice_factory'
+  require root+'fold/precompiler'
 end

@@ -8,8 +8,8 @@ __DIR__ = Pathname.new(__FILE__).dirname
 task :default => 'spec:all'
 
 namespace :spec do
+
   task :prepare do
-    
     @specs= Dir.glob("#{__DIR__}/rspec/**/*.rb").join(' ')
   end
 
@@ -26,44 +26,21 @@ task :cleanup do
   Dir.glob("**/*.*~")+Dir.glob("**/*~").each{|swap|FileUtils.rm(swap, :force => true)}
 end
 
-namespace :gem do
-  task :version do
-    @version = "0.0.9"
-  end
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "fold"
+    gemspec.summary = "A toolkit for creating whitespace active mini-languages. Inspired by Haml, light on features."
+    # gemspec.description = "A different and possibly longer explanation of"
+    gemspec.email = "collintmiller@gmail.com"
+    gemspec.homepage = "http://github.com/collin/fold"
+    gemspec.authors = ["Collin Miller"]
 
-  task :build => :spec do
-    load __DIR__ + "fold.gemspec"
-    Gem::Builder.new(@fold_gemspec).build
+    gemspec.add_dependency('ruby2ruby', '1.2.4')
+    gemspec.add_dependency('ParseTree', '3.0.4')    
+    gemspec.add_dependency('metaid', '1.0')    
   end
-
-  task :install => :build do
-    cmd = "gem install fold -l"
-    system cmd unless system "sudo #{cmd}"
-    FileUtils.rm(__DIR__ + "fold-#{@version}.gem")
-  end
-
-  task :spec => :version do
-    file = File.new(__DIR__ + "fold.gemspec", 'w+')
-    FileUtils.chmod 0755, __DIR__ + "fold.gemspec"
-    spec = %{
-Gem::Specification.new do |s|
-  s.name             = "fold"
-  s.date             = "2008-07-21"
-  s.version          = "#{@version}"
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.has_rdoc         = false
-  s.summary          = "Toolkit for creating whitespace active mini-languages. Inspired by Haml. Feature light."
-  s.authors          = ["Collin Miller"]
-  s.email            = "collintmiller@gmail.com"
-  s.homepage         = "http://github.com/collin/fold"
-  s.files            = %w{#{(%w(README Rakefile.rb) + Dir.glob("{lib,rspec}/**/*")).join(' ')}}
-  
-  s.add_dependency  "rake"
-  s.add_dependency  "rspec"
-end
-}
-
-  @fold_gemspec = eval(spec)
-  file.write(spec)
-  end
+  Jeweler::GemcutterTasks.new
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
 end

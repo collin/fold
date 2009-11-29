@@ -1,5 +1,3 @@
-require 'ruby2ruby'
-
 module Fold
   module SliceFactory
     def self.included klass
